@@ -8,7 +8,7 @@
 #ifndef MORSE_H_
 #define MORSE_H_
 
-#define DOT_DURATION 300
+#define DOT_DURATION 90
 #define DASH_DURATION (DOT_DURATION * 3)
 
 void squeak(uint32_t Duration);

@@ -239,6 +239,13 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+static
+void gvxMorseTaskProceed(void)
+{
+  fox_pangram();
+//    cq();
+  osDelay(DASH_DURATION * 16);
+}
 
 /* USER CODE END 4 */
 
@@ -262,9 +269,7 @@ void StartMorseTask(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-    fox_pangram();
-//    cq();
-    osDelay(DASH_DURATION * 4);
+    gvxMorseTaskProceed();
   }
   /* USER CODE END StartMorseTask */
 }
