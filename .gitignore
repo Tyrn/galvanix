@@ -122,7 +122,7 @@ vendor/
 *.bin
 *.cfg
 *.xml
-
+*.scratch
 *stm32f*
 freertos.*
 *Config.*
