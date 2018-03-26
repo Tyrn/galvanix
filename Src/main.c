@@ -95,7 +95,7 @@ int main(void)
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
   initialise_monitor_handles();
-  printf("Semihosting initialized!\n");
+  printf("Semihosting initialized!\n"); // In Main
   /* USER CODE END 2 */
 
   /* Infinite loop */
