@@ -57,6 +57,7 @@ static void MX_GPIO_Init(void);
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
+extern void initialise_monitor_handles(void);
 
 /* USER CODE END PFP */
 
