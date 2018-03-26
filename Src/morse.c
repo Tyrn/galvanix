@@ -2,23 +2,30 @@
 #include "stub_cmsis_os.h"
 #include "morse.h"
 
+static
+void morse_delay(uint32_t Duration)
+{
+  HAL_Delay(Duration);
+//  osDelay(Duration);
+}
+
 void squeak(uint32_t Duration)
 {
   HAL_GPIO_WritePin(MY_PIN_13_GPIO_Port, MY_PIN_13_Pin, GPIO_PIN_RESET);
-  osDelay(Duration);
+  morse_delay(Duration);
   HAL_GPIO_WritePin(MY_PIN_13_GPIO_Port, MY_PIN_13_Pin, GPIO_PIN_SET);
 }
 
 void dot(void)
 {
   squeak(DOT_DURATION);
-  osDelay(DOT_DURATION);
+  morse_delay(DOT_DURATION);
 }
 
 void dash(void)
 {
   squeak(DASH_DURATION);
-  osDelay(DOT_DURATION);
+  morse_delay(DOT_DURATION);
 }
 
 #define SLH() nc()
@@ -26,12 +33,12 @@ void dash(void)
 
 void nc(void)
 {
-  osDelay(DASH_DURATION);
+  morse_delay(DASH_DURATION);
 }
 
 void nw(void)
 {
-  osDelay(DASH_DURATION * 2);
+  morse_delay(DASH_DURATION * 2);
 }
 
 void a(void)

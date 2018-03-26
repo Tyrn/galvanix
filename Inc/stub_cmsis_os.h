@@ -10,6 +10,6 @@
 #ifndef STUB_CMSIS_OS_H_
 #define STUB_CMSIS_OS_H_
 
-#include "cmsis_os.h"
+//#include "cmsis_os.h"
 
 #endif /* STUB_CMSIS_OS_H_ */
