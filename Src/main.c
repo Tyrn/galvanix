@@ -109,9 +109,8 @@ int main(void)
 //    fox_pangram();
     cq();
     HAL_Delay(DASH_DURATION * 4);
-    char name[50];
 //    printf("Who are you? Pretty please...\n");
-//    scanf("%s", name);
+//    char name[50]; scanf("%s", name);
 //    printf("Hello, %s!\n", name);
   }
   /* USER CODE END 3 */
