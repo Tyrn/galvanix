@@ -41,6 +41,7 @@
 #include "stm32f1xx_hal.h"
 
 /* USER CODE BEGIN Includes */
+#include <string.h>
 #include "morse.h"
 /* USER CODE END Includes */
 
@@ -57,7 +58,7 @@ static void MX_GPIO_Init(void);
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
-//extern void initialise_monitor_handles(void);
+extern void initialise_monitor_handles(void);
 
 /* USER CODE END PFP */
 
@@ -95,8 +96,8 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
-//  initialise_monitor_handles();
-//  printf("Semihosting initialized!\n"); // In Main
+  initialise_monitor_handles();
+  printf("Semihosting initialized!\n"); // In Main
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -109,9 +110,11 @@ int main(void)
 //    fox_pangram();
     cq();
     HAL_Delay(DASH_DURATION * 4);
-//    printf("Who are you? Pretty please...\n");
-//    char name[50]; scanf("%s", name);
-//    printf("Hello, %s!\n", name);
+    printf("Кто вы? Pretty please...\n");
+    char name[50]; scanf("%s", name);
+    printf("Добрый день, %s!\n", name);
+    const char alfa[] = "Ёжикqq", bravo[] = "Мумиёqq"; printf("alfa = %d\n", strlen(alfa));
+    printf("bravo = %d\n", strlen(bravo));
   }
   /* USER CODE END 3 */
 
