@@ -22,6 +22,8 @@ struct pmru_s
 
 wchar_t pmru_wchar_head(uint8_t *str);
 
+// > > Walking the Unicode string.
+
 void pmru_s_first(struct pmru_s *i, uint8_t *s);
 void pmru_s_next(struct pmru_s *i);
 // Done: i->width == 0
@@ -29,12 +31,14 @@ char pmru_s_current_toascii(struct pmru_s *uni);
 
 uint32_t pmru_s_len(uint8_t *str);
 
-uint8_t *pmru_get_cell(wchar_t ch);
+// > > Walking the cell array.
 
 // len r/o
 void pmru_nc_init(struct pmru_nc *newcells);
 uint8_t *pmru_nc_next(struct pmru_nc *newcells);
 // Done: newcells->i >= newcells->len
+
+// > > Creating the cell array.
 
 // len r/w
 void pmru_nc_reset(struct pmru_nc *newcells);

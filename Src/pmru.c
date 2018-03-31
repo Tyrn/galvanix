@@ -147,8 +147,10 @@ void pmru_nc_reset(struct pmru_nc *newcells)
 void pmru_nc_add_cell(struct pmru_nc *newcells, uint8_t *cell)
 {
   if(pmru_nc_find_cell(newcells, cell)) return;
-  newcells->cells[newcells->len++] = cell;
-  if(newcells->len >= LCD_NEWCELL_NUM) newcells->len = 0;
+  if(newcells->len < LCD_NEWCELL_NUM)
+  {
+    newcells->cells[newcells->len++] = cell;
+  }
 }
 
 void pmru_nc_add_char(struct pmru_nc *newcells, wchar_t ch)
@@ -176,7 +178,7 @@ void pmru_nc_add_str(struct pmru_nc *newcells, uint8_t *str)
 wchar_t pmru_wchar_head(uint8_t* str)
 {
   uint16_t uw = *(uint16_t*)str;
-  uint16_t u = (uw >> 8) | (uw << 8);
+  uint16_t u = (uw >> 8) | (uw << 8);   // The necessity to swap bytes beats me.
 
   return (uint32_t)(((u >> 2) & 0x07C0) | (u & 0x003F));
 }

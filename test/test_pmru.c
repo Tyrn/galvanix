@@ -83,4 +83,6 @@ void test_pmru_pmru_nc_add_str(void)
   TEST_ASSERT_TRUE(nc.len == 0);
   pmru_nc_add_str(&nc, "ЙKЛMHOПPCTУ");
   TEST_ASSERT_TRUE(nc.len == 4);
+  pmru_nc_add_str(&nc, mix);
+  TEST_ASSERT_TRUE(nc.len == 8);
 }
