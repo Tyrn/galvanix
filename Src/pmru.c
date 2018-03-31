@@ -167,24 +167,23 @@ void pmru_nc_add_char(struct pmru_nc *newcells, wchar_t ch)
   pmru_nc_add_cell(newcells, cell);
 }
 
-char *pmru_nc_add_str(struct pmru_nc *newcells, uint8_t *str)
+void pmru_nc_add_str(struct pmru_nc *newcells, uint8_t *str)
 {
   struct pmru_s uni;
-  static wchar_t test[50];
-  int i = 0;
-  wchar_t wch;
 
-  memset(test, 0, sizeof test);
   pmru_nc_reset(newcells);
   for(pmru_s_first(&uni, str); uni.width; pmru_s_next(&uni))
   {
     if(uni.width == 2)
     {
-      memcpy(&wch, uni.c, sizeof wch);
-      test[i] = wch;
-      pmru_nc_add_char(newcells, wch);
+      pmru_nc_add_char(newcells, pmru_toL(*(uint16_t*)uni.c));
     }
   }
-  return (char*)test;
 }
 
+wchar_t pmru_toL(uint16_t uw)
+{
+  uint16_t u = (uw >> 8) | (uw << 8);
+
+  return (uint32_t)(((u >> 2) & 0x07C0) | (u & 0x003F));
+}

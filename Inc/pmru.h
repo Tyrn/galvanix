@@ -19,6 +19,9 @@ struct pmru_s
   uint32_t width;  // Done when width == 0.
 };
 
+
+wchar_t pmru_toL(uint16_t u);
+
 void pmru_s_first(struct pmru_s *i, uint8_t *s);
 void pmru_s_next(struct pmru_s *i);
 // Done: i->width == 0
@@ -36,7 +39,7 @@ uint8_t *pmru_nc_next(struct pmru_nc *newcells);
 // len r/w
 void pmru_nc_reset(struct pmru_nc *newcells);
 void pmru_nc_add_char(struct pmru_nc *newcells, wchar_t ch);
-char *pmru_nc_add_str(struct pmru_nc *newcells, uint8_t *str);
+void pmru_nc_add_str(struct pmru_nc *newcells, uint8_t *str);
 
 
 #endif // _PMRU_H
