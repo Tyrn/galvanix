@@ -67,10 +67,10 @@ void test_pmru_pmru_nc_add_char(void)
   pmru_nc_add_char(&nc, L'Ж');
   pmru_nc_add_char(&nc, L'Ф');
   pmru_nc_add_char(&nc, L'Ж');
-  pmru_nc_add_char(&nc, pmru_toL(*(uint16_t*)"Б"));
-  pmru_nc_add_char(&nc, pmru_toL(*(uint16_t*)"Г"));
-  pmru_nc_add_char(&nc, pmru_toL(*(uint16_t*)"Г"));
-  pmru_nc_add_char(&nc, pmru_toL(*(uint16_t*)"Д"));
+  pmru_nc_add_char(&nc, pmru_wchar_head("Б"));
+  pmru_nc_add_char(&nc, pmru_wchar_head("Г"));
+  pmru_nc_add_char(&nc, pmru_wchar_head("Г"));
+  pmru_nc_add_char(&nc, pmru_wchar_head("Д"));
   TEST_ASSERT_TRUE(nc.len == 5);
   TEST_ASSERT_TRUE(sizeof(wchar_t) == 4);
 }
@@ -78,15 +78,9 @@ void test_pmru_pmru_nc_add_char(void)
 void test_pmru_pmru_nc_add_str(void)
 {
   struct pmru_nc nc;
-  char msg[100];
-  char rb[] = "Б";
 
   pmru_nc_add_str(&nc, "abba");
   TEST_ASSERT_TRUE(nc.len == 0);
   pmru_nc_add_str(&nc, "ЙKЛMHOПPCTУ");
   TEST_ASSERT_TRUE(nc.len == 4);
-//  sprintf(msg, "len == %d, str == [%s]", nc.len, tst);
-//  TEST_ASSERT_TRUE_MESSAGE(nc.len == 4, msg);
-//  sprintf(msg, "Lrb == [%X], rbtoL == [%X], rb == [%X]", L'Б', pmru_toL(*(uint16_t*)rb), *(uint16_t*)rb);
-//  TEST_ASSERT_TRUE_MESSAGE(1 == 4, msg);
 }

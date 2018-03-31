@@ -1,6 +1,6 @@
 #include "stm32f1xx_hal.h"
 #include "pmru.h"
-#include <string.h>
+//#include <string.h>
 
 #define XS (LCD_CELL_HEIGHT)
 
@@ -43,18 +43,10 @@ void pmru_s_first(struct pmru_s *i, uint8_t *s)
 {
   i->c = s;
   i->width = pmru_s_char_width(s);
-//  if(*s == 0) {i->width = 0;}
-//  else if(*s >= 0xFC) {i->width = 6;}
-//  else if(*s >= 0xF8) {i->width = 5;}
-//  else if(*s >= 0xF0) {i->width = 4;}
-//  else if(*s >= 0xE0) {i->width = 3;}
-//  else if(*s >= 0xC0) {i->width = 2;}
-//  else {i->width = 1;}
 }
 
 void pmru_s_next(struct pmru_s *i)
 {
-//  pmru_s_first(i, i->c + i->width);
   i->c += i->width;
   i->width = pmru_s_char_width(i->c);
 }
@@ -176,13 +168,14 @@ void pmru_nc_add_str(struct pmru_nc *newcells, uint8_t *str)
   {
     if(uni.width == 2)
     {
-      pmru_nc_add_char(newcells, pmru_toL(*(uint16_t*)uni.c));
+      pmru_nc_add_char(newcells, pmru_wchar_head(uni.c));
     }
   }
 }
 
-wchar_t pmru_toL(uint16_t uw)
+wchar_t pmru_wchar_head(uint8_t* str)
 {
+  uint16_t uw = *(uint16_t*)str;
   uint16_t u = (uw >> 8) | (uw << 8);
 
   return (uint32_t)(((u >> 2) & 0x07C0) | (u & 0x003F));

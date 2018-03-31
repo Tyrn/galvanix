@@ -20,7 +20,7 @@ struct pmru_s
 };
 
 
-wchar_t pmru_toL(uint16_t u);
+wchar_t pmru_wchar_head(uint8_t *str);
 
 void pmru_s_first(struct pmru_s *i, uint8_t *s);
 void pmru_s_next(struct pmru_s *i);
