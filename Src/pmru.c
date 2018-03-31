@@ -1,57 +1,190 @@
 #include "stm32f1xx_hal.h"
 #include "pmru.h"
+#include <string.h>
 
-#define XS 8
+#define XS (LCD_CELL_HEIGHT)
 
-uint8_t    rB[XS] = {0x1E, 0x10, 0x10, 0x1E, 0x11, 0x11, 0x1E, 0x00};
-uint8_t    rG[XS] = {0x1F, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x00};
-uint8_t    rD[XS] = {0x06, 0x0A, 0x0A, 0x0A, 0x0A, 0x1F, 0x11, 0x00};
-uint8_t   rYO[XS] = {0x0A, 0x1F, 0x10, 0x1E, 0x10, 0x10, 0x1F, 0x00};
-uint8_t   rZH[XS] = {0x04, 0x15, 0x15, 0x0E, 0x15, 0x15, 0x04, 0x00};
-uint8_t    rZ[XS] = {0x0E, 0x11, 0x01, 0x06, 0x01, 0x11, 0x0E, 0x00};
-uint8_t    rI[XS] = {0x11, 0x11, 0x13, 0x15, 0x19, 0x11, 0x11, 0x00};
-uint8_t    rJ[XS] = {0x0E, 0x15, 0x11, 0x13, 0x15, 0x19, 0x11, 0x00};
-uint8_t    rL[XS] = {0x07, 0x09, 0x09, 0x09, 0x09, 0x09, 0x11, 0x00};
-uint8_t    rP[XS] = {0x1F, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00};
-uint8_t    rU[XS] = {0x11, 0x11, 0x11, 0x0F, 0x01, 0x01, 0x0E, 0x00};
-uint8_t    rF[XS] = {0x0E, 0x15, 0x15, 0x15, 0x0E, 0x04, 0x04, 0x00};
-uint8_t   rTS[XS] = {0x12, 0x12, 0x12, 0x12, 0x12, 0x1F, 0x01, 0x00};
-uint8_t   rCH[XS] = {0x11, 0x11, 0x11, 0x0F, 0x01, 0x01, 0x01, 0x00};
-uint8_t   rSH[XS] = {0x15, 0x15, 0x15, 0x15, 0x15, 0x15, 0x1F, 0x00};
-uint8_t rSHCH[XS] = {0x15, 0x15, 0x15, 0x15, 0x15, 0x15, 0x1F, 0x01};
-uint8_t   rIE[XS] = {0x18, 0x08, 0x08, 0x0E, 0x09, 0x09, 0x0E, 0x00};
-uint8_t    rY[XS] = {0x11, 0x11, 0x19, 0x15, 0x15, 0x15, 0x19, 0x00};
-uint8_t    rQ[XS] = {0x10, 0x10, 0x10, 0x1C, 0x12, 0x12, 0x1C, 0x00};
-uint8_t   rEH[XS] = {0x0E, 0x11, 0x01, 0x0F, 0x01, 0x11, 0x0E, 0x00};
-uint8_t   rYU[XS] = {0x12, 0x15, 0x15, 0x1D, 0x15, 0x15, 0x12, 0x00};
-uint8_t   rYA[XS] = {0x0F, 0x11, 0x11, 0x0F, 0x05, 0x09, 0x11, 0x00};
+static uint8_t    rB[XS] = {0x1E, 0x10, 0x10, 0x1E, 0x11, 0x11, 0x1E, 0x00};
+static uint8_t    rG[XS] = {0x1F, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x00};
+static uint8_t    rD[XS] = {0x06, 0x0A, 0x0A, 0x0A, 0x0A, 0x1F, 0x11, 0x00};
+static uint8_t   rYO[XS] = {0x0A, 0x1F, 0x10, 0x1E, 0x10, 0x10, 0x1F, 0x00};
+static uint8_t   rZH[XS] = {0x04, 0x15, 0x15, 0x0E, 0x15, 0x15, 0x04, 0x00};
+static uint8_t    rZ[XS] = {0x0E, 0x11, 0x01, 0x06, 0x01, 0x11, 0x0E, 0x00};
+static uint8_t    rI[XS] = {0x11, 0x11, 0x13, 0x15, 0x19, 0x11, 0x11, 0x00};
+static uint8_t    rJ[XS] = {0x0E, 0x15, 0x11, 0x13, 0x15, 0x19, 0x11, 0x00};
+static uint8_t    rL[XS] = {0x07, 0x09, 0x09, 0x09, 0x09, 0x09, 0x11, 0x00};
+static uint8_t    rP[XS] = {0x1F, 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00};
+static uint8_t    rU[XS] = {0x11, 0x11, 0x11, 0x0F, 0x01, 0x01, 0x0E, 0x00};
+static uint8_t    rF[XS] = {0x0E, 0x15, 0x15, 0x15, 0x0E, 0x04, 0x04, 0x00};
+static uint8_t   rTS[XS] = {0x12, 0x12, 0x12, 0x12, 0x12, 0x1F, 0x01, 0x00};
+static uint8_t   rCH[XS] = {0x11, 0x11, 0x11, 0x0F, 0x01, 0x01, 0x01, 0x00};
+static uint8_t   rSH[XS] = {0x15, 0x15, 0x15, 0x15, 0x15, 0x15, 0x1F, 0x00};
+static uint8_t rSHCH[XS] = {0x15, 0x15, 0x15, 0x15, 0x15, 0x15, 0x1F, 0x01};
+static uint8_t   rIE[XS] = {0x18, 0x08, 0x08, 0x0E, 0x09, 0x09, 0x0E, 0x00};
+static uint8_t    rY[XS] = {0x11, 0x11, 0x19, 0x15, 0x15, 0x15, 0x19, 0x00};
+static uint8_t    rQ[XS] = {0x10, 0x10, 0x10, 0x1C, 0x12, 0x12, 0x1C, 0x00};
+static uint8_t   rEH[XS] = {0x0E, 0x11, 0x01, 0x0F, 0x01, 0x11, 0x0E, 0x00};
+static uint8_t   rYU[XS] = {0x12, 0x15, 0x15, 0x1D, 0x15, 0x15, 0x12, 0x00};
+static uint8_t   rYA[XS] = {0x0F, 0x11, 0x11, 0x0F, 0x05, 0x09, 0x11, 0x00};
+static uint8_t rSTUB[XS] = {0x00, 0x0A, 0x1F, 0x1F, 0x1F, 0x0E, 0x04, 0x00};
 
-uint8_t* pmru_cell(uint16_t ch)
+uint32_t pmru_s_char_width(uint8_t *s)
+{
+  if(*s == 0)    return 0;
+  if(*s >= 0xFC) return 6;
+  if(*s >= 0xF8) return 5;
+  if(*s >= 0xF0) return 4;
+  if(*s >= 0xE0) return 3;
+  if(*s >= 0xC0) return 2;
+  return 1;
+}
+
+void pmru_s_first(struct pmru_s *i, uint8_t *s)
+{
+  i->c = s;
+  i->width = pmru_s_char_width(s);
+//  if(*s == 0) {i->width = 0;}
+//  else if(*s >= 0xFC) {i->width = 6;}
+//  else if(*s >= 0xF8) {i->width = 5;}
+//  else if(*s >= 0xF0) {i->width = 4;}
+//  else if(*s >= 0xE0) {i->width = 3;}
+//  else if(*s >= 0xC0) {i->width = 2;}
+//  else {i->width = 1;}
+}
+
+void pmru_s_next(struct pmru_s *i)
+{
+//  pmru_s_first(i, i->c + i->width);
+  i->c += i->width;
+  i->width = pmru_s_char_width(i->c);
+}
+
+uint32_t pmru_s_len(uint8_t *str)
+{
+  uint32_t cnt = 0;
+  struct pmru_s uni;
+  for(pmru_s_first(&uni, str); uni.width; pmru_s_next(&uni))
+  {
+    cnt++;
+  }
+  return cnt;
+}
+
+char pmru_s_current_toascii(struct pmru_s *uni)
+{
+  if(uni->width == 2)
+  {
+    switch((wchar_t)*uni->c)
+    {
+      case L'А': return 'A';
+      case L'В': return 'B';
+      case L'Е': return 'E';
+      case L'К': return 'K';
+      case L'М': return 'M';
+      case L'Н': return 'H';
+      case L'О': return 'O';
+      case L'Р': return 'P';
+      case L'С': return 'C';
+      case L'Т': return 'T';
+      case L'Х': return 'X';
+    }
+  }
+  if(uni->width == 1) return *uni->c;
+  return 0;
+}
+
+uint8_t *pmru_get_cell(wchar_t ch)
 {
   switch(ch)
   {
-    case 'Б': return    rB;
-    case 'Г': return    rG;
-    case 'Д': return    rD;
-    case 'Ё': return   rYO;
-    case 'Ж': return   rZH;
-    case 'З': return    rZ;
-    case 'И': return    rI;
-    case 'Й': return    rJ;
-    case 'Л': return    rL;
-    case 'П': return    rP;
-    case 'У': return    rU;
-    case 'Ф': return    rF;
-    case 'Ц': return   rTS;
-    case 'Ч': return   rCH;
-    case 'Ш': return   rSH;
-    case 'Щ': return rSHCH;
-    case 'Ъ': return   rIE;
-    case 'Ы': return    rY;
-    case 'Ь': return    rQ;
-    case 'Э': return   rEH;
-    case 'Ю': return   rYU;
-    case 'Я': return   rYA;
-    default:  return   rIE;
+    case L'Б': return    rB;
+    case L'Г': return    rG;
+    case L'Д': return    rD;
+    case L'Ё': return   rYO;
+    case L'Ж': return   rZH;
+    case L'З': return    rZ;
+    case L'И': return    rI;
+    case L'Й': return    rJ;
+    case L'Л': return    rL;
+    case L'П': return    rP;
+    case L'У': return    rU;
+    case L'Ф': return    rF;
+    case L'Ц': return   rTS;
+    case L'Ч': return   rCH;
+    case L'Ш': return   rSH;
+    case L'Щ': return rSHCH;
+    case L'Ъ': return   rIE;
+    case L'Ы': return    rY;
+    case L'Ь': return    rQ;
+    case L'Э': return   rEH;
+    case L'Ю': return   rYU;
+    case L'Я': return   rYA;
+    default:   return rSTUB;
   }
 }
+
+// len r/o
+
+void pmru_nc_init(struct pmru_nc *newcells)
+{
+  newcells->i = 0;
+}
+
+uint8_t *pmru_nc_next(struct pmru_nc *newcells)
+{
+  if(newcells->i >= newcells->len) return NULL;
+  return newcells->cells[newcells->i++];
+}
+
+uint8_t *pmru_nc_find_cell(struct pmru_nc *newcells, uint8_t *cell)
+{
+  uint32_t n;
+
+  for(n = 0; n < newcells->len; n++) if(cell == newcells->cells[n]) return cell;
+  return NULL;
+}
+
+// len r/w
+
+void pmru_nc_reset(struct pmru_nc *newcells)
+{
+  newcells->i = 0;
+  newcells->len = 0;
+}
+
+void pmru_nc_add_cell(struct pmru_nc *newcells, uint8_t *cell)
+{
+  if(pmru_nc_find_cell(newcells, cell)) return;
+  newcells->cells[newcells->len++] = cell;
+  if(newcells->len >= LCD_NEWCELL_NUM) newcells->len = 0;
+}
+
+void pmru_nc_add_char(struct pmru_nc *newcells, wchar_t ch)
+{
+  uint8_t *cell;
+
+  cell = pmru_get_cell(ch);
+  pmru_nc_add_cell(newcells, cell);
+}
+
+char *pmru_nc_add_str(struct pmru_nc *newcells, uint8_t *str)
+{
+  struct pmru_s uni;
+  static wchar_t test[50];
+  int i = 0;
+  wchar_t wch;
+
+  memset(test, 0, sizeof test);
+  pmru_nc_reset(newcells);
+  for(pmru_s_first(&uni, str); uni.width; pmru_s_next(&uni))
+  {
+    if(uni.width == 2)
+    {
+      memcpy(&wch, uni.c, sizeof wch);
+      test[i] = wch;
+      pmru_nc_add_char(newcells, wch);
+    }
+  }
+  return (char*)test;
+}
+
