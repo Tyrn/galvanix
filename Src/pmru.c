@@ -180,7 +180,7 @@ wchar_t pmru_wchar_head(uint8_t* str)
   uint16_t uw = *(uint16_t*)str;        // Assume 2-byte Unicode character.
   uint16_t u = (uw >> 8) | (uw << 8);   // Mind the little-endian.
 
-  return (uint32_t)((u >> 2) & 0x07C0 | u & 0x003F);
+  return (uint32_t)(((u >> 2) & 0x07C0) | (u & 0x003F));
 }
 
 uint32_t pmru_lcd_byte(uint8_t byte, uint8_t mask)  // mask: 1: data, 0: command.
