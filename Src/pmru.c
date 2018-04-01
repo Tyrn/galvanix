@@ -35,7 +35,7 @@ uint32_t pmru_s_char_width(uint8_t *s)
   if(*s >= 0xF8) return 5;
   if(*s >= 0xF0) return 4;
   if(*s >= 0xE0) return 3;
-  if(*s >= 0xC0) return 2;
+  if(*s >= 0xC0) return 2;    // Remember the big-endian.
   return 1;
 }
 
@@ -115,7 +115,7 @@ uint8_t *pmru_get_cell(wchar_t ch)
   }
 }
 
-// len r/o
+// notch r/o
 
 void pmru_nc_init(struct pmru_nc *newcells)
 {
@@ -124,7 +124,7 @@ void pmru_nc_init(struct pmru_nc *newcells)
 
 uint8_t *pmru_nc_next(struct pmru_nc *newcells)
 {
-  if(newcells->i >= newcells->len) return NULL;
+  if(newcells->i >= newcells->notch) return NULL;
   return newcells->cells[newcells->i++];
 }
 
@@ -132,24 +132,24 @@ uint8_t *pmru_nc_find_cell(struct pmru_nc *newcells, uint8_t *cell)
 {
   uint32_t n;
 
-  for(n = 0; n < newcells->len; n++) if(cell == newcells->cells[n]) return cell;
+  for(n = 0; n < newcells->notch; n++) if(cell == newcells->cells[n]) return cell;
   return NULL;
 }
 
-// len r/w
+// notch r/w
 
 void pmru_nc_reset(struct pmru_nc *newcells)
 {
   newcells->i = 0;
-  newcells->len = 0;
+  newcells->notch = 0;
 }
 
 void pmru_nc_add_cell(struct pmru_nc *newcells, uint8_t *cell)
 {
   if(pmru_nc_find_cell(newcells, cell)) return;
-  if(newcells->len < LCD_NEWCELL_NUM)
+  if(newcells->notch < LCD_NEWCELL_NUM)
   {
-    newcells->cells[newcells->len++] = cell;
+    newcells->cells[newcells->notch++] = cell;
   }
 }
 
@@ -178,7 +178,7 @@ void pmru_nc_add_str(struct pmru_nc *newcells, uint8_t *str)
 wchar_t pmru_wchar_head(uint8_t* str)
 {
   uint16_t uw = *(uint16_t*)str;
-  uint16_t u = (uw >> 8) | (uw << 8);   // The necessity to swap bytes beats me.
+  uint16_t u = (uw >> 8) | (uw << 8);   // Remember the big-endian.
 
   return (uint32_t)(((u >> 2) & 0x07C0) | (u & 0x003F));
 }
