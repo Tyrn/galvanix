@@ -33,6 +33,9 @@ uint32_t pmru_s_len(uint8_t *str);
 
 // > > Walking the cell array. notch is the index of the
 //     free cell available, equal to the amount of the cells stored.
+//
+//     Cell array is a collection of different Russian characters
+//     (up to 8) to be uploaded to the LCD CGRAM.
 
 // notch r/o
 void pmru_nc_init(struct pmru_nc *newcells);
@@ -45,6 +48,10 @@ uint8_t *pmru_nc_next(struct pmru_nc *newcells);
 void pmru_nc_reset(struct pmru_nc *newcells);
 void pmru_nc_add_char(struct pmru_nc *newcells, wchar_t ch);
 void pmru_nc_add_str(struct pmru_nc *newcells, uint8_t *str);
+
+// > > Addressing the LCD.
+
+uint32_t pmru_lcd_byte(uint8_t byte, uint8_t mask);  // mask: 1: data, 0: command.
 
 
 #endif // _PMRU_H

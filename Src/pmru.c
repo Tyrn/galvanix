@@ -35,7 +35,7 @@ uint32_t pmru_s_char_width(uint8_t *s)
   if(*s >= 0xF8) return 5;
   if(*s >= 0xF0) return 4;
   if(*s >= 0xE0) return 3;
-  if(*s >= 0xC0) return 2;    // Remember the big-endian.
+  if(*s >= 0xC0) return 2;    // Mind the little-endian.
   return 1;
 }
 
@@ -177,8 +177,23 @@ void pmru_nc_add_str(struct pmru_nc *newcells, uint8_t *str)
 
 wchar_t pmru_wchar_head(uint8_t* str)
 {
-  uint16_t uw = *(uint16_t*)str;
-  uint16_t u = (uw >> 8) | (uw << 8);   // Remember the big-endian.
+  uint16_t uw = *(uint16_t*)str;        // Assume 2-byte Unicode character.
+  uint16_t u = (uw >> 8) | (uw << 8);   // Mind the little-endian.
 
-  return (uint32_t)(((u >> 2) & 0x07C0) | (u & 0x003F));
+  return (uint32_t)((u >> 2) & 0x07C0 | u & 0x003F);
+}
+
+uint32_t pmru_lcd_byte(uint8_t byte, uint8_t mask)  // mask: 1: data, 0: command.
+{
+  uint32_t chunk;
+  uint8_t *buf = (uint8_t*)&chunk;
+  uint8_t msn, lsn;
+
+  msn    = byte & 0xF0;
+  lsn    = (byte << 4) & 0xF0;
+  buf[0] = msn | mask | 0x04;
+  buf[1] = msn | mask;
+  buf[2] = lsn | mask | 0x04;
+  buf[3] = lsn | mask;
+  return chunk;
 }

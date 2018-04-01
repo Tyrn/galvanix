@@ -86,3 +86,9 @@ void test_pmru_pmru_nc_add_str(void)
   pmru_nc_add_str(&nc, mix);
   TEST_ASSERT_TRUE(nc.notch == 8);
 }
+
+void test_pmru_pmru_lcd_byte(void)
+{
+  TEST_ASSERT_TRUE(pmru_lcd_byte(0x28, 0) == 0x80842024);
+  TEST_ASSERT_TRUE(pmru_lcd_byte(0x28, 1) == 0x81852125);
+}
