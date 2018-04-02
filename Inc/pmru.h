@@ -8,7 +8,7 @@
 
 struct pmru_nc
 {
-  uint8_t  *cells[LCD_NEWCELL_NUM];
+  wchar_t  cells[LCD_NEWCELL_NUM];
   uint32_t notch;
   uint32_t i;
 };
@@ -39,7 +39,7 @@ uint32_t pmru_s_len(uint8_t *str);
 
 // notch r/o
 void pmru_nc_init(struct pmru_nc *newcells);
-uint8_t *pmru_nc_next(struct pmru_nc *newcells);
+wchar_t pmru_nc_next(struct pmru_nc *newcells);
 // Done: newcells->i >= newcells->notch
 
 // > > Creating the cell array.

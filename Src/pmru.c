@@ -115,66 +115,6 @@ uint8_t *pmru_get_cell(wchar_t ch)
   }
 }
 
-// notch r/o
-
-void pmru_nc_init(struct pmru_nc *newcells)
-{
-  newcells->i = 0;
-}
-
-uint8_t *pmru_nc_next(struct pmru_nc *newcells)
-{
-  if(newcells->i >= newcells->notch) return NULL;
-  return newcells->cells[newcells->i++];
-}
-
-uint8_t *pmru_nc_find_cell(struct pmru_nc *newcells, uint8_t *cell)
-{
-  uint32_t n;
-
-  for(n = 0; n < newcells->notch; n++) if(cell == newcells->cells[n]) return cell;
-  return NULL;
-}
-
-// notch r/w
-
-void pmru_nc_reset(struct pmru_nc *newcells)
-{
-  newcells->i = 0;
-  newcells->notch = 0;
-}
-
-void pmru_nc_add_cell(struct pmru_nc *newcells, uint8_t *cell)
-{
-  if(pmru_nc_find_cell(newcells, cell)) return;
-  if(newcells->notch < LCD_NEWCELL_NUM)
-  {
-    newcells->cells[newcells->notch++] = cell;
-  }
-}
-
-void pmru_nc_add_char(struct pmru_nc *newcells, wchar_t ch)
-{
-  uint8_t *cell;
-
-  cell = pmru_get_cell(ch);
-  pmru_nc_add_cell(newcells, cell);
-}
-
-void pmru_nc_add_str(struct pmru_nc *newcells, uint8_t *str)
-{
-  struct pmru_s uni;
-
-  pmru_nc_reset(newcells);
-  for(pmru_s_first(&uni, str); uni.width; pmru_s_next(&uni))
-  {
-    if(uni.width == 2)
-    {
-      pmru_nc_add_char(newcells, pmru_wchar_head(uni.c));
-    }
-  }
-}
-
 wchar_t pmru_wchar_head(uint8_t* str)
 {
   uint16_t uw = *(uint16_t*)str;        // Assume 2-byte Unicode character.
@@ -196,4 +136,81 @@ uint32_t pmru_lcd_byte(uint8_t byte, uint8_t mask)  // mask: 1: data, 0: command
   buf[2] = lsn | mask | 0x04;
   buf[3] = lsn | mask;
   return chunk;
+}
+
+// notch r/o
+
+void pmru_nc_init(struct pmru_nc *newcells)
+{
+  newcells->i = 0;
+}
+
+wchar_t pmru_nc_next(struct pmru_nc *newcells)
+{
+  if(newcells->i >= newcells->notch) return -1;
+  return newcells->cells[newcells->i++];
+}
+
+int pmru_nc_find_cell(struct pmru_nc *newcells, wchar_t cell)
+{
+  uint32_t n;
+
+  for(n = 0; n < newcells->notch; n++) if(cell == newcells->cells[n]) return n;
+  return -1;
+}
+
+// notch r/w
+
+void pmru_nc_reset(struct pmru_nc *newcells)
+{
+  newcells->i = 0;
+  newcells->notch = 0;
+}
+
+void pmru_nc_add_char(struct pmru_nc *newcells, wchar_t ch)
+{
+  if(pmru_nc_find_cell(newcells, ch) >= 0) return;
+  if(newcells->notch < LCD_NEWCELL_NUM)
+  {
+//    uint8_t *cell = pmru_get_cell(ch);
+    // TODO: Write cell to CGRAM[notch]
+    newcells->cells[newcells->notch++] = ch;
+  }
+}
+
+void pmru_nc_add_str(struct pmru_nc *newcells, uint8_t *str)
+{
+  struct pmru_s uni;
+
+  pmru_nc_reset(newcells);
+  for(pmru_s_first(&uni, str); uni.width; pmru_s_next(&uni))
+  {
+    if(uni.width == 2)
+    {
+      pmru_nc_add_char(newcells, pmru_wchar_head(uni.c));
+    }
+  }
+}
+
+void pmru_lcd_puts(uint8_t *str)
+{
+  struct pmru_nc nc;
+  struct pmru_s  uni;
+
+  pmru_nc_add_str(&nc, str);
+  for(pmru_s_first(&uni, str); uni.width; pmru_s_next(&uni))
+  {
+    if(uni.width == 2)
+    {
+      int i = pmru_nc_find_cell(&nc, pmru_wchar_head(uni.c));
+      if(i >= 0)
+      {
+        // TODO: Transmit CGRAM[i]
+      }
+    }
+    else
+    {
+      // TODO: Transmit *uni.c
+    }
+  }
 }
