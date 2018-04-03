@@ -1,6 +1,5 @@
 #include "stm32f1xx_hal.h"
 #include "pmru.h"
-//#include <string.h>
 
 #define XS (LCD_CELL_HEIGHT)
 
@@ -31,10 +30,12 @@ static uint8_t rSTUB[XS] = {0x00, 0x0A, 0x1F, 0x1F, 0x1F, 0x0E, 0x04, 0x00};
 uint32_t pmru_s_char_width(uint8_t *s)
 {
   if(*s == 0)    return 0;
+#if 0                         // Our Unicode is up to word size.
   if(*s >= 0xFC) return 6;
   if(*s >= 0xF8) return 5;
   if(*s >= 0xF0) return 4;
   if(*s >= 0xE0) return 3;
+#endif
   if(*s >= 0xC0) return 2;    // Mind the little-endian.
   return 1;
 }
@@ -62,11 +63,11 @@ uint32_t pmru_s_len(uint8_t *str)
   return cnt;
 }
 
-char pmru_s_current_toascii(struct pmru_s *uni)
+char pmru_s_toascii(struct pmru_s *uni)
 {
   if(uni->width == 2)
   {
-    switch((wchar_t)*uni->c)
+    switch((unichar_t)*uni->c)
     {
       case L'А': return 'A';
       case L'В': return 'B';
@@ -85,7 +86,7 @@ char pmru_s_current_toascii(struct pmru_s *uni)
   return 0;
 }
 
-uint8_t *pmru_get_cell(wchar_t ch)
+uint8_t *pmru_get_cell(unichar_t ch)
 {
   switch(ch)
   {
@@ -115,12 +116,12 @@ uint8_t *pmru_get_cell(wchar_t ch)
   }
 }
 
-wchar_t pmru_wchar_head(uint8_t* str)
+unichar_t pmru_unichar_head(uint8_t* str)
 {
   uint16_t uw = *(uint16_t*)str;        // Assume 2-byte Unicode character.
   uint16_t u = (uw >> 8) | (uw << 8);   // Mind the little-endian.
 
-  return (uint32_t)(((u >> 2) & 0x07C0) | (u & 0x003F));
+  return ((u >> 2) & 0x07C0) | (u & 0x003F);
 }
 
 uint32_t pmru_lcd_byte(uint8_t byte, uint8_t mask)  // mask: 1: data, 0: command.
@@ -145,13 +146,13 @@ void pmru_nc_init(struct pmru_nc *newcells)
   newcells->i = 0;
 }
 
-wchar_t pmru_nc_next(struct pmru_nc *newcells)
+int pmru_nc_next(struct pmru_nc *newcells)
 {
   if(newcells->i >= newcells->notch) return -1;
-  return newcells->cells[newcells->i++];
+  return newcells->i++;
 }
 
-int pmru_nc_find_cell(struct pmru_nc *newcells, wchar_t cell)
+int pmru_nc_find_cell(struct pmru_nc *newcells, unichar_t cell)
 {
   uint32_t n;
 
@@ -167,7 +168,7 @@ void pmru_nc_reset(struct pmru_nc *newcells)
   newcells->notch = 0;
 }
 
-void pmru_nc_add_char(struct pmru_nc *newcells, wchar_t ch)
+void pmru_nc_add_char(struct pmru_nc *newcells, unichar_t ch)
 {
   if(pmru_nc_find_cell(newcells, ch) >= 0) return;
   if(newcells->notch < LCD_NEWCELL_NUM)
@@ -187,7 +188,7 @@ void pmru_nc_add_str(struct pmru_nc *newcells, uint8_t *str)
   {
     if(uni.width == 2)
     {
-      pmru_nc_add_char(newcells, pmru_wchar_head(uni.c));
+      pmru_nc_add_char(newcells, pmru_unichar_head(uni.c));
     }
   }
 }
@@ -202,7 +203,7 @@ void pmru_lcd_puts(uint8_t *str)
   {
     if(uni.width == 2)
     {
-      int i = pmru_nc_find_cell(&nc, pmru_wchar_head(uni.c));
+      int i = pmru_nc_find_cell(&nc, pmru_unichar_head(uni.c));
       if(i >= 0)
       {
         // TODO: Transmit CGRAM[i]

@@ -67,12 +67,12 @@ void test_pmru_pmru_nc_add_char(void)
   pmru_nc_add_char(&nc, L'Ж');
   pmru_nc_add_char(&nc, L'Ф');
   pmru_nc_add_char(&nc, L'Ж');
-  pmru_nc_add_char(&nc, pmru_wchar_head("Б"));
-  pmru_nc_add_char(&nc, pmru_wchar_head("Г"));
-  pmru_nc_add_char(&nc, pmru_wchar_head("Г"));
-  pmru_nc_add_char(&nc, pmru_wchar_head("Д"));
+  pmru_nc_add_char(&nc, pmru_unichar_head("Б"));
+  pmru_nc_add_char(&nc, pmru_unichar_head("Г"));
+  pmru_nc_add_char(&nc, pmru_unichar_head("Г"));
+  pmru_nc_add_char(&nc, pmru_unichar_head("Д"));
   TEST_ASSERT_TRUE(nc.notch == 5);
-  TEST_ASSERT_TRUE(sizeof(wchar_t) == 4);
+  TEST_ASSERT_TRUE(sizeof(unichar_t) == 2);
 }
 
 void test_pmru_pmru_nc_add_str(void)
