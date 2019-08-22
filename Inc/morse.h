@@ -8,6 +8,8 @@
 #ifndef MORSE_H_
 #define MORSE_H_
 
+#include "main.h"
+
 #define DOT_DURATION 90
 #define DASH_DURATION (DOT_DURATION * 3)
 

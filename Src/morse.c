@@ -11,11 +11,9 @@ void morse_delay(uint32_t Duration)
 
 void squeak(uint32_t Duration)
 {
-/*
   HAL_GPIO_WritePin(MY_PIN_13_GPIO_Port, MY_PIN_13_Pin, GPIO_PIN_RESET);
   morse_delay(Duration);
   HAL_GPIO_WritePin(MY_PIN_13_GPIO_Port, MY_PIN_13_Pin, GPIO_PIN_SET);
-*/
 }
 
 void dot(void)
