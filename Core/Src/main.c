@@ -21,7 +21,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <string.h>
+#include "morse.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -95,6 +96,14 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+//    fox_pangram();
+    cq();
+    HAL_Delay(DASH_DURATION * 4);
+//    printf("Кто вы? Pretty please...\n");
+//    char name[50]; scanf("%s", name);
+//    printf("Добрый день, %s!\n", name);
+//    const char alfa[] = "Ёжикqq", bravo[] = "Мумиёqq"; printf("alfa = %d\n", strlen(alfa));
+//    printf("bravo = %d\n", strlen(bravo));
   }
   /* USER CODE END 3 */
 }
