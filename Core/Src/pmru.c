@@ -10,6 +10,7 @@
 #define XS (LCD_CELL_HEIGHT)
 
 // @formatter:off
+static uint8_t rSTUB[XS] = {0x00, 0x0A, 0x1F, 0x1F, 0x1F, 0x0E, 0x04, 0x00};
 static uint8_t    rB[XS] = {0x1E, 0x10, 0x10, 0x1E, 0x11, 0x11, 0x1E, 0x00};
 static uint8_t    rG[XS] = {0x1F, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x00};
 static uint8_t    rD[XS] = {0x06, 0x0A, 0x0A, 0x0A, 0x0A, 0x1F, 0x11, 0x00};
@@ -32,7 +33,6 @@ static uint8_t    rQ[XS] = {0x10, 0x10, 0x10, 0x1C, 0x12, 0x12, 0x1C, 0x00};
 static uint8_t   rEH[XS] = {0x0E, 0x11, 0x01, 0x0F, 0x01, 0x11, 0x0E, 0x00};
 static uint8_t   rYU[XS] = {0x12, 0x15, 0x15, 0x1D, 0x15, 0x15, 0x12, 0x00};
 static uint8_t   rYA[XS] = {0x0F, 0x11, 0x11, 0x0F, 0x05, 0x09, 0x11, 0x00};
-static uint8_t rSTUB[XS] = {0x00, 0x0A, 0x1F, 0x1F, 0x1F, 0x0E, 0x04, 0x00};
 // @formatter:on
 
 uint32_t pmru_s_char_width(uint8_t *s)
@@ -106,6 +106,59 @@ char pmru_s_toascii(struct pmru_s *uni)
   if (uni->width == 1)
     return *uni->c;
   return 0;
+}
+
+uint32_t pmru_get_index(unichar_t ch)
+{
+  switch (ch)
+  {
+  case L'Б':
+    return 1;
+  case L'Г':
+    return 2;
+  case L'Д':
+    return 3;
+  case L'Ё':
+    return 4;
+  case L'Ж':
+    return 5;
+  case L'З':
+    return 6;
+  case L'И':
+    return 7;
+  case L'Й':
+    return 8;
+  case L'Л':
+    return 9;
+  case L'П':
+    return 10;
+  case L'У':
+    return 11;
+  case L'Ф':
+    return 12;
+  case L'Ц':
+    return 13;
+  case L'Ч':
+    return 14;
+  case L'Ш':
+    return 15;
+  case L'Щ':
+    return 16;
+  case L'Ъ':
+    return 17;
+  case L'Ы':
+    return 18;
+  case L'Ь':
+    return 19;
+  case L'Э':
+    return 20;
+  case L'Ю':
+    return 21;
+  case L'Я':
+    return 22;
+  default:
+    return 0;
+  }
 }
 
 uint8_t* pmru_get_cell(unichar_t ch)
