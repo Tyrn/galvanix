@@ -164,24 +164,279 @@ void test_cell_matrix_eq(void)
 
   TEST_ASSERT_TRUE(cell_matrix_eq(&m1, &m2));
 }
-/*
-void test_pmru_lcd_cell_(void)
+
+void test_pmru_lcd_cell_stub(void)
 {
   static cell_matrix_type matrix =
   {
       "        ",
-      "        ",
-      "        ",
-      "        ",
-      "        ",
-      "        ",
-      "        ",
+      "    * * ",
+      "   *****",
+      "   *****",
+      "   *****",
+      "    *** ",
+      "     *  ",
       "        "
   };
 
-  TEST_ASSERT_TRUE(cell_matrix_eq(create_cell_matrix(L''), &matrix));
+  TEST_ASSERT_TRUE(cell_matrix_eq(create_cell_matrix(L'*'), &matrix));
 }
-*/
+
+void test_pmru_lcd_cell_b(void)
+{
+  static cell_matrix_type matrix =
+  {
+      "   **** ",
+      "   *    ",
+      "   *    ",
+      "   **** ",
+      "   *   *",
+      "   *   *",
+      "   **** ",
+      "        "
+  };
+
+  TEST_ASSERT_TRUE(cell_matrix_eq(create_cell_matrix(L'Б'), &matrix));
+}
+
+void test_pmru_lcd_cell_g(void)
+{
+  static cell_matrix_type matrix =
+  {
+      "   *****",
+      "   *    ",
+      "   *    ",
+      "   *    ",
+      "   *    ",
+      "   *    ",
+      "   *    ",
+      "        "
+  };
+
+  TEST_ASSERT_TRUE(cell_matrix_eq(create_cell_matrix(L'Г'), &matrix));
+}
+
+void test_pmru_lcd_cell_d(void)
+{
+  static cell_matrix_type matrix =
+  {
+      "     ** ",
+      "    * * ",
+      "    * * ",
+      "    * * ",
+      "    * * ",
+      "   *****",
+      "   *   *",
+      "        "
+  };
+
+  TEST_ASSERT_TRUE(cell_matrix_eq(create_cell_matrix(L'Д'), &matrix));
+}
+
+void test_pmru_lcd_cell_yo(void)
+{
+  static cell_matrix_type matrix =
+  {
+      "    * * ",
+      "   *****",
+      "   *    ",
+      "   **** ",
+      "   *    ",
+      "   *    ",
+      "   *****",
+      "        "
+  };
+
+  TEST_ASSERT_TRUE(cell_matrix_eq(create_cell_matrix(L'Ё'), &matrix));
+}
+
+void test_pmru_lcd_cell_zh(void)
+{
+  static cell_matrix_type matrix =
+  {
+      "     *  ",
+      "   * * *",
+      "   * * *",
+      "    *** ",
+      "   * * *",
+      "   * * *",
+      "     *  ",
+      "        "
+  };
+
+  TEST_ASSERT_TRUE(cell_matrix_eq(create_cell_matrix(L'Ж'), &matrix));
+}
+
+void test_pmru_lcd_cell_z(void)
+{
+  static cell_matrix_type matrix =
+  {
+      "    *** ",
+      "   *   *",
+      "       *",
+      "     ** ",
+      "       *",
+      "   *   *",
+      "    *** ",
+      "        "
+  };
+
+  TEST_ASSERT_TRUE(cell_matrix_eq(create_cell_matrix(L'З'), &matrix));
+}
+
+void test_pmru_lcd_cell_i(void)
+{
+  static cell_matrix_type matrix =
+  {
+      "   *   *",
+      "   *   *",
+      "   *  **",
+      "   * * *",
+      "   **  *",
+      "   *   *",
+      "   *   *",
+      "        "
+  };
+
+  TEST_ASSERT_TRUE(cell_matrix_eq(create_cell_matrix(L'И'), &matrix));
+}
+
+void test_pmru_lcd_cell_j(void)
+{
+  static cell_matrix_type matrix =
+  {
+      "    *** ",
+      "   * * *",
+      "   *   *",
+      "   *  **",
+      "   * * *",
+      "   **  *",
+      "   *   *",
+      "        "
+  };
+
+  TEST_ASSERT_TRUE(cell_matrix_eq(create_cell_matrix(L'Й'), &matrix));
+}
+
+void test_pmru_lcd_cell_l(void)
+{
+  static cell_matrix_type matrix =
+  {
+      "     ***",
+      "    *  *",
+      "    *  *",
+      "    *  *",
+      "    *  *",
+      "    *  *",
+      "   *   *",
+      "        "
+  };
+
+  TEST_ASSERT_TRUE(cell_matrix_eq(create_cell_matrix(L'Л'), &matrix));
+}
+
+void test_pmru_lcd_cell_p(void)
+{
+  static cell_matrix_type matrix =
+  {
+      "   *****",
+      "   *   *",
+      "   *   *",
+      "   *   *",
+      "   *   *",
+      "   *   *",
+      "   *   *",
+      "        "
+  };
+
+  TEST_ASSERT_TRUE(cell_matrix_eq(create_cell_matrix(L'П'), &matrix));
+}
+
+void test_pmru_lcd_cell_u(void)
+{
+  static cell_matrix_type matrix =
+  {
+      "   *   *",
+      "   *   *",
+      "   *   *",
+      "    ****",
+      "       *",
+      "       *",
+      "    *** ",
+      "        "
+  };
+
+  TEST_ASSERT_TRUE(cell_matrix_eq(create_cell_matrix(L'У'), &matrix));
+}
+
+void test_pmru_lcd_cell_f(void)
+{
+  static cell_matrix_type matrix =
+  {
+      "    *** ",
+      "   * * *",
+      "   * * *",
+      "   * * *",
+      "    *** ",
+      "     *  ",
+      "     *  ",
+      "        "
+  };
+
+  TEST_ASSERT_TRUE(cell_matrix_eq(create_cell_matrix(L'Ф'), &matrix));
+}
+
+void test_pmru_lcd_cell_ts(void)
+{
+  static cell_matrix_type matrix =
+  {
+      "   *  * ",
+      "   *  * ",
+      "   *  * ",
+      "   *  * ",
+      "   *  * ",
+      "   *****",
+      "       *",
+      "        "
+  };
+
+  TEST_ASSERT_TRUE(cell_matrix_eq(create_cell_matrix(L'Ц'), &matrix));
+}
+
+void test_pmru_lcd_cell_ch(void)
+{
+  static cell_matrix_type matrix =
+  {
+      "   *   *",
+      "   *   *",
+      "   *   *",
+      "    ****",
+      "       *",
+      "       *",
+      "       *",
+      "        "
+  };
+
+  TEST_ASSERT_TRUE(cell_matrix_eq(create_cell_matrix(L'Ч'), &matrix));
+}
+
+void test_pmru_lcd_cell_sh(void)
+{
+  static cell_matrix_type matrix =
+  {
+      "   * * *",
+      "   * * *",
+      "   * * *",
+      "   * * *",
+      "   * * *",
+      "   * * *",
+      "   *****",
+      "        "
+  };
+
+  TEST_ASSERT_TRUE(cell_matrix_eq(create_cell_matrix(L'Ш'), &matrix));
+}
+
 void test_pmru_lcd_cell_shch(void)
 {
   static cell_matrix_type matrix =
@@ -197,5 +452,107 @@ void test_pmru_lcd_cell_shch(void)
   };
 
   TEST_ASSERT_TRUE(cell_matrix_eq(create_cell_matrix(L'Щ'), &matrix));
+}
+
+void test_pmru_lcd_cell_ie(void)
+{
+  static cell_matrix_type matrix =
+  {
+      "   **   ",
+      "    *   ",
+      "    *   ",
+      "    *** ",
+      "    *  *",
+      "    *  *",
+      "    *** ",
+      "        "
+  };
+
+  TEST_ASSERT_TRUE(cell_matrix_eq(create_cell_matrix(L'Ъ'), &matrix));
+}
+
+void test_pmru_lcd_cell_y(void)
+{
+  static cell_matrix_type matrix =
+  {
+      "   *   *",
+      "   *   *",
+      "   **  *",
+      "   * * *",
+      "   * * *",
+      "   * * *",
+      "   **  *",
+      "        "
+  };
+
+  TEST_ASSERT_TRUE(cell_matrix_eq(create_cell_matrix(L'Ы'), &matrix));
+}
+
+void test_pmru_lcd_cell_q(void)
+{
+  static cell_matrix_type matrix =
+  {
+      "   *    ",
+      "   *    ",
+      "   *    ",
+      "   ***  ",
+      "   *  * ",
+      "   *  * ",
+      "   ***  ",
+      "        "
+  };
+
+  TEST_ASSERT_TRUE(cell_matrix_eq(create_cell_matrix(L'Ь'), &matrix));
+}
+
+void test_pmru_lcd_cell_eh(void)
+{
+  static cell_matrix_type matrix =
+  {
+      "    *** ",
+      "   *   *",
+      "       *",
+      "    ****",
+      "       *",
+      "   *   *",
+      "    *** ",
+      "        "
+  };
+
+  TEST_ASSERT_TRUE(cell_matrix_eq(create_cell_matrix(L'Э'), &matrix));
+}
+
+void test_pmru_lcd_cell_yu(void)
+{
+  static cell_matrix_type matrix =
+  {
+      "   *  * ",
+      "   * * *",
+      "   * * *",
+      "   *** *",
+      "   * * *",
+      "   * * *",
+      "   *  * ",
+      "        "
+  };
+
+  TEST_ASSERT_TRUE(cell_matrix_eq(create_cell_matrix(L'Ю'), &matrix));
+}
+
+void test_pmru_lcd_cell_ya(void)
+{
+  static cell_matrix_type matrix =
+  {
+      "    ****",
+      "   *   *",
+      "   *   *",
+      "    ****",
+      "     * *",
+      "    *  *",
+      "   *   *",
+      "        "
+  };
+
+  TEST_ASSERT_TRUE(cell_matrix_eq(create_cell_matrix(L'Я'), &matrix));
 }
 // @formatter:on
