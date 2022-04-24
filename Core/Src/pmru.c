@@ -9,6 +9,7 @@
 
 #define XS (LCD_CELL_HEIGHT)
 
+// @formatter:off
 static uint8_t    rB[XS] = {0x1E, 0x10, 0x10, 0x1E, 0x11, 0x11, 0x1E, 0x00};
 static uint8_t    rG[XS] = {0x1F, 0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x00};
 static uint8_t    rD[XS] = {0x06, 0x0A, 0x0A, 0x0A, 0x0A, 0x1F, 0x11, 0x00};
@@ -32,17 +33,20 @@ static uint8_t   rEH[XS] = {0x0E, 0x11, 0x01, 0x0F, 0x01, 0x11, 0x0E, 0x00};
 static uint8_t   rYU[XS] = {0x12, 0x15, 0x15, 0x1D, 0x15, 0x15, 0x12, 0x00};
 static uint8_t   rYA[XS] = {0x0F, 0x11, 0x11, 0x0F, 0x05, 0x09, 0x11, 0x00};
 static uint8_t rSTUB[XS] = {0x00, 0x0A, 0x1F, 0x1F, 0x1F, 0x0E, 0x04, 0x00};
+// @formatter:on
 
 uint32_t pmru_s_char_width(uint8_t *s)
 {
-  if(*s == 0)    return 0;
+  if (*s == 0)
+    return 0;
 #if 0                         // Our Unicode is up to word size.
   if(*s >= 0xFC) return 6;
   if(*s >= 0xF8) return 5;
   if(*s >= 0xF0) return 4;
   if(*s >= 0xE0) return 3;
 #endif
-  if(*s >= 0xC0) return 2;    // Mind the little-endian.
+  if (*s >= 0xC0)
+    return 2;    // Mind the little-endian.
   return 1;
 }
 
@@ -62,7 +66,7 @@ uint32_t pmru_s_len(uint8_t *str)
 {
   uint32_t cnt = 0;
   struct pmru_s uni;
-  for(pmru_s_first(&uni, str); uni.width; pmru_s_next(&uni))
+  for (pmru_s_first(&uni, str); uni.width; pmru_s_next(&uni))
   {
     cnt++;
   }
@@ -71,73 +75,108 @@ uint32_t pmru_s_len(uint8_t *str)
 
 char pmru_s_toascii(struct pmru_s *uni)
 {
-  if(uni->width == 2)
+  if (uni->width == 2)
   {
-    switch((unichar_t)*uni->c)
+    switch ((unichar_t) *uni->c)
     {
-      case L'А': return 'A';
-      case L'В': return 'B';
-      case L'Е': return 'E';
-      case L'К': return 'K';
-      case L'М': return 'M';
-      case L'Н': return 'H';
-      case L'О': return 'O';
-      case L'Р': return 'P';
-      case L'С': return 'C';
-      case L'Т': return 'T';
-      case L'Х': return 'X';
+    case L'А':
+      return 'A';
+    case L'В':
+      return 'B';
+    case L'Е':
+      return 'E';
+    case L'К':
+      return 'K';
+    case L'М':
+      return 'M';
+    case L'Н':
+      return 'H';
+    case L'О':
+      return 'O';
+    case L'Р':
+      return 'P';
+    case L'С':
+      return 'C';
+    case L'Т':
+      return 'T';
+    case L'Х':
+      return 'X';
     }
   }
-  if(uni->width == 1) return *uni->c;
+  if (uni->width == 1)
+    return *uni->c;
   return 0;
 }
 
-uint8_t *pmru_get_cell(unichar_t ch)
+uint8_t* pmru_get_cell(unichar_t ch)
 {
-  switch(ch)
+  switch (ch)
   {
-    case L'Б': return    rB;
-    case L'Г': return    rG;
-    case L'Д': return    rD;
-    case L'Ё': return   rYO;
-    case L'Ж': return   rZH;
-    case L'З': return    rZ;
-    case L'И': return    rI;
-    case L'Й': return    rJ;
-    case L'Л': return    rL;
-    case L'П': return    rP;
-    case L'У': return    rU;
-    case L'Ф': return    rF;
-    case L'Ц': return   rTS;
-    case L'Ч': return   rCH;
-    case L'Ш': return   rSH;
-    case L'Щ': return rSHCH;
-    case L'Ъ': return   rIE;
-    case L'Ы': return    rY;
-    case L'Ь': return    rQ;
-    case L'Э': return   rEH;
-    case L'Ю': return   rYU;
-    case L'Я': return   rYA;
-    default:   return rSTUB;
+  case L'Б':
+    return rB;
+  case L'Г':
+    return rG;
+  case L'Д':
+    return rD;
+  case L'Ё':
+    return rYO;
+  case L'Ж':
+    return rZH;
+  case L'З':
+    return rZ;
+  case L'И':
+    return rI;
+  case L'Й':
+    return rJ;
+  case L'Л':
+    return rL;
+  case L'П':
+    return rP;
+  case L'У':
+    return rU;
+  case L'Ф':
+    return rF;
+  case L'Ц':
+    return rTS;
+  case L'Ч':
+    return rCH;
+  case L'Ш':
+    return rSH;
+  case L'Щ':
+    return rSHCH;
+  case L'Ъ':
+    return rIE;
+  case L'Ы':
+    return rY;
+  case L'Ь':
+    return rQ;
+  case L'Э':
+    return rEH;
+  case L'Ю':
+    return rYU;
+  case L'Я':
+    return rYA;
+  default:
+    return rSTUB;
   }
 }
 
-unichar_t pmru_unichar_head(uint8_t* str)
+unichar_t pmru_unichar_head(uint8_t *str)
 {
-  uint16_t uw = *(uint16_t*)str;        // Assume 2-byte Unicode character.
+  uint16_t uw = *(uint16_t*) str;        // Assume 2-byte Unicode character.
   uint16_t u = (uw >> 8) | (uw << 8);   // Mind the little-endian.
 
   return ((u >> 2) & 0x07C0) | (u & 0x003F);
 }
 
-uint32_t pmru_lcd_byte(uint8_t byte, uint8_t mask)  // mask: 1: data, 0: command.
+uint32_t pmru_lcd_byte(uint8_t byte, uint8_t mask) // mask: 1: data, 0: command.
 {
   uint32_t chunk;
-  uint8_t *buf = (uint8_t*)&chunk;
+  uint8_t *buf = (uint8_t*) &chunk;
   uint8_t msn, lsn;
 
-  msn    = byte & 0xF0;
-  lsn    = (byte << 4) & 0xF0;
+  msn = byte & 0xF0;
+  lsn = (byte << 4) & 0xF0;
   buf[0] = msn | mask | 0x04;
   buf[1] = msn | mask;
   buf[2] = lsn | mask | 0x04;
@@ -154,7 +193,8 @@ void pmru_nc_init(struct pmru_nc *newcells)
 
 int pmru_nc_next(struct pmru_nc *newcells)
 {
-  if(newcells->i >= newcells->notch) return -1;
+  if (newcells->i >= newcells->notch)
+    return -1;
   return newcells->i++;
 }
 
@@ -162,7 +202,9 @@ int pmru_nc_find_cell(struct pmru_nc *newcells, unichar_t cell)
 {
   uint32_t n;
 
-  for(n = 0; n < newcells->notch; n++) if(cell == newcells->cells[n]) return n;
+  for (n = 0; n < newcells->notch; n++)
+    if (cell == newcells->cells[n])
+      return n;
   return -1;
 }
 
@@ -176,8 +218,9 @@ void pmru_nc_reset(struct pmru_nc *newcells)
 
 void pmru_nc_add_char(struct pmru_nc *newcells, unichar_t ch)
 {
-  if(pmru_nc_find_cell(newcells, ch) >= 0) return;
-  if(newcells->notch < LCD_NEWCELL_NUM)
+  if (pmru_nc_find_cell(newcells, ch) >= 0)
+    return;
+  if (newcells->notch < LCD_NEWCELL_NUM)
   {
 //    uint8_t *cell = pmru_get_cell(ch);
     // TODO: Write cell to CGRAM[notch]
@@ -190,9 +233,9 @@ void pmru_nc_add_str(struct pmru_nc *newcells, uint8_t *str)
   struct pmru_s uni;
 
   pmru_nc_reset(newcells);
-  for(pmru_s_first(&uni, str); uni.width; pmru_s_next(&uni))
+  for (pmru_s_first(&uni, str); uni.width; pmru_s_next(&uni))
   {
-    if(uni.width == 2)
+    if (uni.width == 2)
     {
       pmru_nc_add_char(newcells, pmru_unichar_head(uni.c));
     }
@@ -202,15 +245,15 @@ void pmru_nc_add_str(struct pmru_nc *newcells, uint8_t *str)
 void pmru_lcd_puts(uint8_t *str)
 {
   struct pmru_nc nc;
-  struct pmru_s  uni;
+  struct pmru_s uni;
 
   pmru_nc_add_str(&nc, str);
-  for(pmru_s_first(&uni, str); uni.width; pmru_s_next(&uni))
+  for (pmru_s_first(&uni, str); uni.width; pmru_s_next(&uni))
   {
-    if(uni.width == 2)
+    if (uni.width == 2)
     {
       int i = pmru_nc_find_cell(&nc, pmru_unichar_head(uni.c));
-      if(i >= 0)
+      if (i >= 0)
       {
         // TODO: Transmit CGRAM[i]
       }

@@ -15,17 +15,16 @@
 
 struct pmru_nc
 {
-  unichar_t  cells[LCD_NEWCELL_NUM];
-  uint32_t   notch;
-  uint32_t   i;
+  unichar_t cells[LCD_NEWCELL_NUM];
+  uint32_t notch;
+  uint32_t i;
 };
 
 struct pmru_s
 {
-  uint8_t    *c;
-  uint32_t   width;
+  uint8_t *c;
+  uint32_t width;
 };
-
 
 unichar_t pmru_unichar_head(uint8_t *str);
 
@@ -65,7 +64,6 @@ void pmru_nc_add_str(struct pmru_nc *newcells, uint8_t *str);
 /**
  * @brief   Addressing the LCD.
  */
-uint32_t pmru_lcd_byte(uint8_t byte, uint8_t mask);  // mask: 1: data, 0: command.
-
+uint32_t pmru_lcd_byte(uint8_t byte, uint8_t mask); // mask: 1: data, 0: command.
 
 #endif // _PMRU_H
