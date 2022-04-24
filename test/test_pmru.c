@@ -5,9 +5,7 @@
 static
 char rus[] = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
 static
-char mix[] = "AБBГДEЁЖЗИЙKЛMHOПPCTУФXЦЧШЩЪЫЬЭЮЯ"; // 11 characters replaced
-                                                  // with English counterparts.
-
+char mix[] = "AБBГДEЁЖЗИЙKЛMHOПPCTУФXЦЧШЩЪЫЬЭЮЯ"; /* 11 characters replaced with English counterparts. */
 
 void setUp(void)
 {
