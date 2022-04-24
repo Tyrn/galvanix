@@ -11,7 +11,10 @@
 #define unichar_t uint16_t
 
 #define LCD_NEWCELL_NUM 8
+#define LCD_CELL_WIDTH 8
 #define LCD_CELL_HEIGHT 8
+
+typedef uint8_t lcd_cell_type[LCD_CELL_HEIGHT];
 
 struct pmru_nc
 {
@@ -60,6 +63,8 @@ int pmru_nc_next(struct pmru_nc *newcells);
 void pmru_nc_reset(struct pmru_nc *newcells);
 void pmru_nc_add_char(struct pmru_nc *newcells, unichar_t ch);
 void pmru_nc_add_str(struct pmru_nc *newcells, uint8_t *str);
+
+uint8_t* pmru_get_cell(unichar_t ch);
 
 /**
  * @brief   Addressing the LCD.

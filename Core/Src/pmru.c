@@ -7,8 +7,6 @@
 #include "stm32f1xx_hal.h"
 #include "pmru.h"
 
-typedef uint8_t lcd_cell_type[LCD_CELL_HEIGHT];
-
 static lcd_cell_type lcd_cell[23] =
 {
 { 0x00, 0x0A, 0x1F, 0x1F, 0x1F, 0x0E, 0x04, 0x00 },
