@@ -18,7 +18,6 @@ struct pmru_nc
 {
   unichar_t cells[LCD_NEWCELL_NUM]; /* Unicode characters to be represented in LCD CGRAM. */
   uint32_t len; /* The number of the characters collected. */
-  uint32_t i; /* Iteration index. */
 };
 
 struct pmru_s
@@ -43,30 +42,16 @@ char pmru_s_toascii(struct pmru_s *uni);
 uint32_t pmru_s_len(uint8_t *str);
 
 /**
- * @brief   Iterable cell collection (array). len is the index of the
- *          free cell available, equal to the amount of the cells stored.
- *
- *          Cell array is a collection of different Unicode (Russian)
- *          characters (up to 8) to be uploaded to the LCD CGRAM.
+ * @brief   Collection (a set) of different Unicode (Russian)
+ *          characters (size limited by LCD HD44780 device specs)
+ *          to be uploaded to the LCD CGRAM.
  */
 
-/* Just iteration. */
-void pmru_nc_init(struct pmru_nc *newcells);
-int pmru_nc_next(struct pmru_nc *newcells);
-/**
- * @brief   Done condition: newcells->i >= newcells->len.
- */
-
-/* Character acquisition. */
 void pmru_nc_reset(struct pmru_nc *newcells);
 void pmru_nc_add_char(struct pmru_nc *newcells, unichar_t ch);
 void pmru_nc_add_str(struct pmru_nc *newcells, uint8_t *str);
 
 uint8_t* pmru_get_cell(unichar_t ch);
-
-/**
- * @brief   Addressing the LCD.
- */
 uint32_t pmru_lcd_byte(uint8_t byte, uint8_t mask); // mask: 1: data, 0: command.
 
 #endif // _PMRU_H

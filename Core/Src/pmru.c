@@ -187,20 +187,6 @@ uint32_t pmru_lcd_byte(uint8_t byte, uint8_t mask) // mask: 1: data, 0: command.
   return chunk;
 }
 
-/* Just iteration. */
-
-void pmru_nc_init(struct pmru_nc *newcells)
-{
-  newcells->i = 0;
-}
-
-int pmru_nc_next(struct pmru_nc *newcells)
-{
-  if (newcells->i >= newcells->len)
-    return -1;
-  return newcells->i++;
-}
-
 int pmru_nc_find_cell(struct pmru_nc *newcells, unichar_t cell)
 {
   uint32_t n;
@@ -211,11 +197,8 @@ int pmru_nc_find_cell(struct pmru_nc *newcells, unichar_t cell)
   return -1;
 }
 
-/* Character acquisition. */
-
 void pmru_nc_reset(struct pmru_nc *newcells)
 {
-  newcells->i = 0;
   newcells->len = 0;
 }
 
