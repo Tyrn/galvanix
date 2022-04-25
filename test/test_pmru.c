@@ -70,7 +70,7 @@ void test_pmru_pmru_nc_add_char(void)
   pmru_nc_add_char(&nc, pmru_unichar_head("Г"));
   pmru_nc_add_char(&nc, pmru_unichar_head("Г"));
   pmru_nc_add_char(&nc, pmru_unichar_head("Д"));
-  TEST_ASSERT_TRUE(nc.notch == 5);
+  TEST_ASSERT_TRUE(nc.len == 5);
   TEST_ASSERT_TRUE(sizeof(unichar_t) == 2);
 }
 
@@ -79,11 +79,11 @@ void test_pmru_pmru_nc_add_str(void)
   struct pmru_nc nc;
 
   pmru_nc_add_str(&nc, "abba");
-  TEST_ASSERT_TRUE(nc.notch == 0);
+  TEST_ASSERT_TRUE(nc.len == 0);
   pmru_nc_add_str(&nc, "ЙKЛMHOПPCTУ");
-  TEST_ASSERT_TRUE(nc.notch == 4);
+  TEST_ASSERT_TRUE(nc.len == 4);
   pmru_nc_add_str(&nc, mix);
-  TEST_ASSERT_TRUE(nc.notch == 8);
+  TEST_ASSERT_TRUE(nc.len == 8);
 }
 
 void test_pmru_pmru_lcd_byte(void)

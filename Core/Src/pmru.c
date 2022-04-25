@@ -7,7 +7,7 @@
 #include "stm32f1xx_hal.h"
 #include "pmru.h"
 
-static lcd_cell_type lcd_cell[23] =
+static uint8_t lcd_cells[23][LCD_CELL_HEIGHT] =
 {
 { 0x00, 0x0A, 0x1F, 0x1F, 0x1F, 0x0E, 0x04, 0x00 },
 { 0x1E, 0x10, 0x10, 0x1E, 0x11, 0x11, 0x1E, 0x00 },
@@ -161,7 +161,7 @@ uint32_t pmru_get_index(unichar_t ch)
 
 uint8_t* pmru_get_cell(unichar_t ch)
 {
-  return lcd_cell[pmru_get_index(ch)];
+  return lcd_cells[pmru_get_index(ch)];
 }
 
 unichar_t pmru_unichar_head(uint8_t *str)
@@ -187,7 +187,7 @@ uint32_t pmru_lcd_byte(uint8_t byte, uint8_t mask) // mask: 1: data, 0: command.
   return chunk;
 }
 
-// notch r/o
+/* Just iteration. */
 
 void pmru_nc_init(struct pmru_nc *newcells)
 {
@@ -196,7 +196,7 @@ void pmru_nc_init(struct pmru_nc *newcells)
 
 int pmru_nc_next(struct pmru_nc *newcells)
 {
-  if (newcells->i >= newcells->notch)
+  if (newcells->i >= newcells->len)
     return -1;
   return newcells->i++;
 }
@@ -205,29 +205,29 @@ int pmru_nc_find_cell(struct pmru_nc *newcells, unichar_t cell)
 {
   uint32_t n;
 
-  for (n = 0; n < newcells->notch; n++)
+  for (n = 0; n < newcells->len; n++)
     if (cell == newcells->cells[n])
       return n;
   return -1;
 }
 
-// notch r/w
+/* Character acquisition. */
 
 void pmru_nc_reset(struct pmru_nc *newcells)
 {
   newcells->i = 0;
-  newcells->notch = 0;
+  newcells->len = 0;
 }
 
 void pmru_nc_add_char(struct pmru_nc *newcells, unichar_t ch)
 {
   if (pmru_nc_find_cell(newcells, ch) >= 0)
     return;
-  if (newcells->notch < LCD_NEWCELL_NUM)
+  if (newcells->len < LCD_NEWCELL_NUM)
   {
 //    uint8_t *cell = pmru_get_cell(ch);
     // TODO: Write cell to CGRAM[notch]
-    newcells->cells[newcells->notch++] = ch;
+    newcells->cells[newcells->len++] = ch;
   }
 }
 

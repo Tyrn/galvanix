@@ -14,13 +14,11 @@
 #define LCD_CELL_WIDTH 8
 #define LCD_CELL_HEIGHT 8
 
-typedef uint8_t lcd_cell_type[LCD_CELL_HEIGHT];
-
 struct pmru_nc
 {
-  unichar_t cells[LCD_NEWCELL_NUM];
-  uint32_t notch;
-  uint32_t i;
+  unichar_t cells[LCD_NEWCELL_NUM]; /* Unicode characters to be represented in LCD CGRAM. */
+  uint32_t len; /* The number of the characters collected. */
+  uint32_t i; /* Iteration index. */
 };
 
 struct pmru_s
@@ -45,21 +43,21 @@ char pmru_s_toascii(struct pmru_s *uni);
 uint32_t pmru_s_len(uint8_t *str);
 
 /**
- * @brief   Iterable cell collection (array). notch is the index of the
+ * @brief   Iterable cell collection (array). len is the index of the
  *          free cell available, equal to the amount of the cells stored.
  *
- *          Cell array is a collection of different Russian characters
- *          (up to 8) to be uploaded to the LCD CGRAM.
+ *          Cell array is a collection of different Unicode (Russian)
+ *          characters (up to 8) to be uploaded to the LCD CGRAM.
  */
 
-/* notch r/o. */
+/* Just iteration. */
 void pmru_nc_init(struct pmru_nc *newcells);
 int pmru_nc_next(struct pmru_nc *newcells);
 /**
- * @brief   Done condition: newcells->i >= newcells->notch.
+ * @brief   Done condition: newcells->i >= newcells->len.
  */
 
-/* notch r/w. */
+/* Character acquisition. */
 void pmru_nc_reset(struct pmru_nc *newcells);
 void pmru_nc_add_char(struct pmru_nc *newcells, unichar_t ch);
 void pmru_nc_add_str(struct pmru_nc *newcells, uint8_t *str);
