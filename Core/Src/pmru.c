@@ -33,33 +33,62 @@ static uint8_t lcd_cells[23][LCD_CELL_HEIGHT] =
 { 0x12, 0x15, 0x15, 0x1D, 0x15, 0x15, 0x12, 0x00 },
 { 0x0F, 0x11, 0x11, 0x0F, 0x05, 0x09, 0x11, 0x00 } };
 
+/**
+ * @brief Checks the size of a Unicode character.
+ *
+ * @param[in] s Pointer to the first byte of a Unicode character.
+ *
+ * @return Size of the Unicode character in bytes.
+ */
 uint32_t pmru_s_char_width(uint8_t *s)
 {
   if (*s == 0)
     return 0;
 #if 0                         // Our Unicode is up to word size.
-  if(*s >= 0xFC) return 6;
-  if(*s >= 0xF8) return 5;
-  if(*s >= 0xF0) return 4;
-  if(*s >= 0xE0) return 3;
+  if (*s >= 0xFC)
+    return 6;
+  if (*s >= 0xF8)
+    return 5;
+  if (*s >= 0xF0)
+    return 4;
+  if (*s >= 0xE0)
+    return 3;
 #endif
   if (*s >= 0xC0)
     return 2;    // Mind the little-endian.
   return 1;
 }
 
+/**
+ * @brief Initializes an iterator over a Unicode string.
+ *
+ * @param[out] i The iterator.
+ * @param[in]  s The Unicode string to iterate over.
+ */
 void pmru_s_first(struct pmru_s *i, uint8_t *s)
 {
   i->c = s;
   i->width = pmru_s_char_width(s);
 }
 
+/**
+ * @brief Next step over a Unicode string.
+ *
+ * @param[out] i The iterator (initialized before).
+ */
 void pmru_s_next(struct pmru_s *i)
 {
   i->c += i->width;
   i->width = pmru_s_char_width(i->c);
 }
 
+/**
+ * @brief Checks the length of a Unicode string.
+ *
+ * @param[in] str Pointer to a Unicode string.
+ *
+ * @return Length of the Unicode string in characters.
+ */
 uint32_t pmru_s_len(uint8_t *str)
 {
   uint32_t cnt = 0;
