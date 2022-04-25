@@ -11,7 +11,7 @@
 #define unichar_t uint16_t
 
 #define LCD_NEWCELL_NUM 8
-#define LCD_CELL_WIDTH 8
+#define LCD_CELL_WIDTH 5
 #define LCD_CELL_HEIGHT 8
 
 struct pmru_nc
