@@ -25,8 +25,8 @@ struct pmru_nc
 
 struct pmru_s
 {
-  uint8_t *c;
-  uint32_t width;
+  uint8_t *c; /* Pointer to the current Unicode character (the tail of the string). */
+  uint32_t width; /* Width of the current Unicode character (0 with the empty tail). */
 };
 
 unichar_t pmru_unichar_head(uint8_t *str);
