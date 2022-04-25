@@ -59,7 +59,7 @@ bool cell_matrix_eq(cell_matrix_type *m1, cell_matrix_type *m2)
 // @formatter:off
 void test_cell_matrix_eq(void)
 {
-  static cell_matrix_type m1 =
+  cell_matrix_type m1 =
   {
       "* * *",
       "* * *",
@@ -70,7 +70,7 @@ void test_cell_matrix_eq(void)
       "*****",
       "    *"
   };
-  static cell_matrix_type m2 =
+  cell_matrix_type m2 =
   {
       "* * *",
       "* * *",
@@ -87,7 +87,7 @@ void test_cell_matrix_eq(void)
 
 void test_pmru_lcd_cell_stub(void)
 {
-  static cell_matrix_type matrix =
+  cell_matrix_type matrix =
   {
       "     ",
       " * * ",
@@ -104,7 +104,7 @@ void test_pmru_lcd_cell_stub(void)
 
 void test_pmru_lcd_cell_b(void)
 {
-  static cell_matrix_type matrix =
+  cell_matrix_type matrix =
   {
       "**** ",
       "*    ",
@@ -121,7 +121,7 @@ void test_pmru_lcd_cell_b(void)
 
 void test_pmru_lcd_cell_g(void)
 {
-  static cell_matrix_type matrix =
+  cell_matrix_type matrix =
   {
       "*****",
       "*    ",
@@ -138,7 +138,7 @@ void test_pmru_lcd_cell_g(void)
 
 void test_pmru_lcd_cell_d(void)
 {
-  static cell_matrix_type matrix =
+  cell_matrix_type matrix =
   {
       "  ** ",
       " * * ",
@@ -155,7 +155,7 @@ void test_pmru_lcd_cell_d(void)
 
 void test_pmru_lcd_cell_yo(void)
 {
-  static cell_matrix_type matrix =
+  cell_matrix_type matrix =
   {
       " * * ",
       "*****",
@@ -172,7 +172,7 @@ void test_pmru_lcd_cell_yo(void)
 
 void test_pmru_lcd_cell_zh(void)
 {
-  static cell_matrix_type matrix =
+  cell_matrix_type matrix =
   {
       "  *  ",
       "* * *",
@@ -189,7 +189,7 @@ void test_pmru_lcd_cell_zh(void)
 
 void test_pmru_lcd_cell_z(void)
 {
-  static cell_matrix_type matrix =
+  cell_matrix_type matrix =
   {
       " *** ",
       "*   *",
@@ -206,7 +206,7 @@ void test_pmru_lcd_cell_z(void)
 
 void test_pmru_lcd_cell_i(void)
 {
-  static cell_matrix_type matrix =
+  cell_matrix_type matrix =
   {
       "*   *",
       "*   *",
@@ -223,7 +223,7 @@ void test_pmru_lcd_cell_i(void)
 
 void test_pmru_lcd_cell_j(void)
 {
-  static cell_matrix_type matrix =
+  cell_matrix_type matrix =
   {
       " *** ",
       "* * *",
@@ -240,7 +240,7 @@ void test_pmru_lcd_cell_j(void)
 
 void test_pmru_lcd_cell_l(void)
 {
-  static cell_matrix_type matrix =
+  cell_matrix_type matrix =
   {
       "  ***",
       " *  *",
@@ -257,7 +257,7 @@ void test_pmru_lcd_cell_l(void)
 
 void test_pmru_lcd_cell_p(void)
 {
-  static cell_matrix_type matrix =
+  cell_matrix_type matrix =
   {
       "*****",
       "*   *",
@@ -274,7 +274,7 @@ void test_pmru_lcd_cell_p(void)
 
 void test_pmru_lcd_cell_u(void)
 {
-  static cell_matrix_type matrix =
+  cell_matrix_type matrix =
   {
       "*   *",
       "*   *",
@@ -291,7 +291,7 @@ void test_pmru_lcd_cell_u(void)
 
 void test_pmru_lcd_cell_f(void)
 {
-  static cell_matrix_type matrix =
+  cell_matrix_type matrix =
   {
       " *** ",
       "* * *",
@@ -308,7 +308,7 @@ void test_pmru_lcd_cell_f(void)
 
 void test_pmru_lcd_cell_ts(void)
 {
-  static cell_matrix_type matrix =
+  cell_matrix_type matrix =
   {
       "*  * ",
       "*  * ",
@@ -325,7 +325,7 @@ void test_pmru_lcd_cell_ts(void)
 
 void test_pmru_lcd_cell_ch(void)
 {
-  static cell_matrix_type matrix =
+  cell_matrix_type matrix =
   {
       "*   *",
       "*   *",
@@ -342,7 +342,7 @@ void test_pmru_lcd_cell_ch(void)
 
 void test_pmru_lcd_cell_sh(void)
 {
-  static cell_matrix_type matrix =
+  cell_matrix_type matrix =
   {
       "* * *",
       "* * *",
@@ -359,7 +359,7 @@ void test_pmru_lcd_cell_sh(void)
 
 void test_pmru_lcd_cell_shch(void)
 {
-  static cell_matrix_type matrix =
+  cell_matrix_type matrix =
   {
       "* * *",
       "* * *",
@@ -376,7 +376,7 @@ void test_pmru_lcd_cell_shch(void)
 
 void test_pmru_lcd_cell_ie(void)
 {
-  static cell_matrix_type matrix =
+  cell_matrix_type matrix =
   {
       "**   ",
       " *   ",
@@ -393,7 +393,7 @@ void test_pmru_lcd_cell_ie(void)
 
 void test_pmru_lcd_cell_y(void)
 {
-  static cell_matrix_type matrix =
+  cell_matrix_type matrix =
   {
       "*   *",
       "*   *",
@@ -410,7 +410,7 @@ void test_pmru_lcd_cell_y(void)
 
 void test_pmru_lcd_cell_q(void)
 {
-  static cell_matrix_type matrix =
+  cell_matrix_type matrix =
   {
       "*    ",
       "*    ",
@@ -427,7 +427,7 @@ void test_pmru_lcd_cell_q(void)
 
 void test_pmru_lcd_cell_eh(void)
 {
-  static cell_matrix_type matrix =
+  cell_matrix_type matrix =
   {
       " *** ",
       "*   *",
@@ -444,7 +444,7 @@ void test_pmru_lcd_cell_eh(void)
 
 void test_pmru_lcd_cell_yu(void)
 {
-  static cell_matrix_type matrix =
+  cell_matrix_type matrix =
   {
       "*  * ",
       "* * *",
@@ -461,7 +461,7 @@ void test_pmru_lcd_cell_yu(void)
 
 void test_pmru_lcd_cell_ya(void)
 {
-  static cell_matrix_type matrix =
+  cell_matrix_type matrix =
   {
       " ****",
       "*   *",
