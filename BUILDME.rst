@@ -2,7 +2,6 @@ Galvanix
 ********
 
 - `Eclipse setup and misc <https://github.com/Tyrn/arch-chronicle/blob/master/Usage/Ac6_SW4STM32.md>`__
-- Make sure Git leave the line endings alone: ``$ git config –global core.autocrlf false``
 
 Run unit tests on host
 ======================
